@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% extends 'dashboard.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Add products</h4>
+
+                    <form class="forms-sample" method="post"
+                          action="{% url 'save_product' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="form-group">
+                        <label for="exampleSelectGender">Category Name</label>
+                        <select class="form-control" id="exampleSelectGender" name="cname">
+                        <option>Select Category</option>
+                         {% for i in categories %}
+                            <option>{{ i.CategoryName }}</option>
+                         {% endfor %}
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="exampleInputName1">Product Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Product Name" name="pname">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Price</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Price" name="price">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Upload product image:</label>
+                        <input type="file" name="pimage">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4" name="description"></textarea>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for msg in messages %}
+        {% if msg.tags == "success" %}
+            <script>
+                swal('{{msg}}', '', 'success')
+            </script>
+
+        {% elif msg.tags == "warning" %}
+            <script>
+                swal('{{msg}}', '', 'warning')
+            </script>
+
+        {% elif msg.tags == "error" %}
+            <script>
+                swal('{{msg}}', '', 'error')
+            </script>
+
+        {% elif msg.tags == "info" %}
+            <script>
+                swal('{{msg}}', '', 'info')
+            </script>
+
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</body>
+</html>
+{% endblock %}
